@@ -26,3 +26,9 @@
   overflow:hidden;
   font-size:0.9em;
 }
+
+
+/*** form elements ***/
+
+#puamsearch {  padding: 8px 8px; }
+#puam { border:solid 1px grey; background:#EEE; padding: 4px 8px; }
