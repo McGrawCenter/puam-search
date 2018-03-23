@@ -1,6 +1,6 @@
 <?php
    /*
-   Plugin Name: PUAM Search
+   Plugin Name: Princeton University Image Search
    Description: 
    Version: 1.0
    License: GPL2
