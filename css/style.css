@@ -1,9 +1,28 @@
 
 .puamimageblock {
   width:160px;
-  height:230px;
+  height:240px;
   float:left;
   border:solid 1px #DEDEDE;
   padding:3px;
   margin:0 4px 4px 0;
+}
+
+
+.puamimageblock-image {
+  width:150px;
+  text-align:center;
+  height:180px;
+  overflow:hidden;
+}
+
+.puamimageblock img  {
+  cursor: pointer;
+}
+
+.puamimageblock-meta {
+  width:150px;
+  height:60px;
+  overflow:hidden;
+  font-size:0.9em;
 }

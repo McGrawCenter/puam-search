@@ -3,20 +3,38 @@
 jQuery(document).ready(function(){
 
 
+	function populateGallery(hits) {
+	  jQuery("#puamsearchresults").empty();
+	  jQuery.each( hits, function( key, item ) {
+	    // some hits don't have associated images for some reason
+	    if( typeof item._source.primaryimage[0] !== 'undefined' ) {
+	      var id = item._id;
+	      var title = item._source.displaytitle;
+	      var url = item._source.primaryimage[0]+"/full/150,/0/default.jpg";
+	      var html = '<li class="puamimageblock">';
+	      html += '  <div class="puamimageblock-image">';
+	      html += '    <img src="'+url+'" class="puamimage" rel="'+id+'" draggable="false" alt="Image of '+title+'" >';
+	      html += '  </div>';
+	      html += '<div class="puamimageblock-meta">';
+	      html += title;
+	      html += '</div>';
+	      html += '</li>';
+	      jQuery("#puamsearchresults").append(  html  );
+	    }
+	  });
+	}
+
+
+
 	/***********************************
 	* inital population of image gallery 
 	* in PUAM search interface
 	***********************************/
-
-	jQuery.getJSON( vars.site_url+"?puam&q=golden&type=artobjects", function( data ) {
+	jQuery.getJSON( vars.site_url+"?puam&q=princeton&type=artobjects", function( data ) {
 	  var hits = data.hits.hits;
-	  jQuery("#puamsearchresults").empty();
-	  jQuery.each( hits, function( key, item ) {
-	    var id = item._id;
-	    var title = item._source.titles[0].title;
-	    var url = item._source.media[0].uri+"/full/150,150/0/default.jpg";
-	    jQuery("#puamsearchresults").append( '<li class="puamimageblock"><img src="'+url+'" class="puamimage" rel="'+id+'" draggable="false" alt="" style="float:left;"><div>'+title+'</div></li>'  );
-	  })
+	  if( typeof hits !== 'undefined' ) {
+	    populateGallery(hits);
+	  } 
 	});
 
 
@@ -27,18 +45,12 @@ jQuery(document).ready(function(){
 
 	  jQuery( "#puamsearch" ).keyup( function() {
 		var searchstr = jQuery("#puamsearch").val();
-		console.log('change');
-		//alert(vars.site_url+"?puam&q="+searchstr+"&type=artobjects");
+		console.log(vars.site_url+"?puam&q="+searchstr+"&type=artobjects");
 		jQuery.getJSON( vars.site_url+"?puam&q="+searchstr+"&type=artobjects", function( data ) {
 		  var hits = data.hits.hits;
-		  jQuery("#puamsearchresults").empty();
-		  jQuery.each( hits, function( key, item ) {
-		    var id = item._id;
-		    var title = item._source.titles[0].title;
-		    var url = item._source.media[0].uri+"/full/150,150/0/default.jpg";
-		    //http://puam-lori-elasticl-w22fk7028hd9-1675803086.us-east-1.elb.amazonaws.com/loris/INV12705.jp2/full/200,200/0/default.jpg
-		    jQuery("#puamsearchresults").append( '<li class="puamimageblock"><img src="'+url+'" class="puamimage" rel="'+id+'" draggable="false" alt="" style="float:left;"><div>'+title+'</div></li>'  );
-		  })
+		  if( typeof hits !== 'undefined' ) {
+		    populateGallery(hits);
+		  } 
  		});
 	  });
 
@@ -47,7 +59,7 @@ jQuery(document).ready(function(){
 	* User clicks on an image
 	***********************************/
 
-	  jQuery( document ).on( "click", ".puamimage", function() {
+	  jQuery( document ).on( "click", ".puamimage", function(event) {
         	var imageurl = jQuery(this).attr('src').replace("150,150","800,");
         	var id = jQuery(this).attr('rel');
 
@@ -65,7 +77,7 @@ jQuery(document).ready(function(){
         	  parent.wp.media.editor.insert(html);
  		});
 
-
+	   event.preventDefault();
 
 	  });
 	

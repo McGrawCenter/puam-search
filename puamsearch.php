@@ -36,7 +36,7 @@ add_filter('media_view_settings', 'puamsearch_add_mediaupload_tab');
 *********************************/
 
 function puamsearch_upload_tab($tabs) {
-    $tabs['puamsearch'] = "Insert from PUAM";
+    $tabs['puamsearch'] = "Princeton University Art Museum";
     return $tabs;
 }
 add_filter('media_upload_tabs', 'puamsearch_upload_tab');
@@ -101,7 +101,7 @@ add_action('wp_enqueue_media', 'include_puam_media_button_js_file');
 
 if(isset($_GET['puam'])) {
   if(isset($_GET['q'])) { 
-	$searchstr = $_GET['q'];
+	$searchstr = urlencode($_GET['q']);
 	$json = file_get_contents("http://data.artmuseum.princeton.edu/search?q={$searchstr}&type=artobjects");
 	}
   if(isset($_GET['id'])) { 
