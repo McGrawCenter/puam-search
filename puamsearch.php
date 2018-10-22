@@ -8,7 +8,7 @@
 
 
 /*****************
-* This adds a new button baove the editor next to 'insert media'
+* This adds a new button above the editor next to 'insert media'
 
 function add_puam_media_button() {
     echo '<a href="#" id="insert-puam-media" class="button">Princeton Art Museum</a>';
